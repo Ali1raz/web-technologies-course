@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 100%;
+      }
+      li {
+        color: pink;
+        background-color: aquamarine;
+      }
+
+      ol li {
+        color: red;
+      }
+
+      ol > li {
+        color: black;
+      }
+
+      a {
+        color: #333;
+      }
+      a[href="https://facebook.com"]
+      {
+        color: #0004de;
+      }
+
+      button {
+        background-color: rgb(247, 252, 110);
+        color: black;
+        font-size: 24px;
+        padding-inline: 50px;
+        padding-block: 10px;
+        border-radius: 0;
+        margin: 0 auto;
+        border: 0;
+        transition: all 0.1s ease-in;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: rgb(234, 238, 107);
+        transform: scale(1.02) translate(-1px, -2px);
+      }
+    </style>
+  </head>
+  <body>
+    <ol>
+      <li>one</li>
+      <li>to</li>
+      <ul>
+        <li>sublist one</li>
+        <li>sublust two</li>
+        <li>sublist three</li>
+      </ul>
+      <li>three</li>
+    </ol>
+
+    <hr />
+
+    <a href="https://amazon.com">Amazon</a>
+    <a href="https://google.com">Google</a>
+    <a href="https://facebook.com">Facebook</a>
+
+    <hr />
+
+    <button>Button</button>
+  </body>
+</html>
