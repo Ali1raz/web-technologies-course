@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    color-scheme: light dark;
+    --dark-color: #232323;
+    --light-color: #e2e2e2;
+
+    --shadow: hsl(0deg, 0%, 0% / 0.25);
+
+    --brand-color: #1e3a8a;
+    --brand-color-2: #446edf;
+    --brand-border-radius: 0px;
+    --brand-border: 2px solid var(--brand-color);
+}
+
+body {
+    /* background-color: light-dark(var(--light-color), var(--dark-color)); */
+    color: light-dark(var(--dark-color), var(--light-color));
+    font-family: "Lato", sans-serif;
+    width: 100%;
+    height: 100dvh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+main h2 {
+    text-align: center;
+    font-size: clamp(24px, 4vw, 5vw);
+    margin-bottom: 4rem;
+}
+
+form {
+    width: 100%;
+    background: light-dark(var(--light-color), var(--dark-color));
+    border-radius: var(--brand-border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-block: 40px;
+    gap: 1rem;
+}
+
+form div {
+    width: 80%;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.3rem;
+    /* margin-left: 8px; */
+}
+label, input, select,
+option {
+    font-family: monospace;
+}
+
+input, select {
+    padding: 12px 8px;
+    width: 100%;
+    border-radius: var(--brand-border-radius);
+    border: var(--brand-border);
+    outline: none;
+}
+
+input:focus, 
+input:focus-within,
+select:focus,
+select:focus-within {
+    border-color: var(--brand-color);
+}
+
+button {
+width: 100%;
+  background: light-dark(var(--dark-color), var(--light-color));
+  color: light-dark(var(--light-color), var(--brand-color));
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  border: 0;
+
+  border-radius: var(--brand-border-radius);
+}
+
+button .front {
+    background: var(--brand-color);
+    color: var(--light-color);
+    padding: 12px;
+    display: block;
+    position: relative;
+    transform: translateY(-4px);
+    will-change: transform;
+    transition: transform .6s cubic-bezier(.3, .7, .4, 1);
+}
+
+button:hover .front {
+    transform: translateY(-6px);
+    transition: transform .25s cubic-bezier(.3, .7, .4, 1.5);
+  }
+  
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  button:active .front {
+    transform: translateY(-2px);
+  }
+
+@media (min-width: 500px) {
+    form {
+        width: 80%;
+        max-width: 500px;
+        border-radius: var(--brand-border-radius);
+    }
+}
