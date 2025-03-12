@@ -1,51 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    color-scheme: light dark;
-    --dark-color: #232323;
-    --light-color: #e2e2e2;
-
-
-    --brand-color: #1e3a8a;
-    --brand-color-2: #446edf;
-    --brand-border-radius: 0px;
-    --brand-border: 2px solid var(--brand-color);
-}
-
-body {
-    /*background-color: light-dark(var(--light-color), var(--dark-color));*/
-    color: light-dark(var(--dark-color), var(--light-color));
-    font-family: "Lato", sans-serif;
-    width: 100%;
-    height: 100dvh;
-}
-
-header {
-    width: 100%;
-    /*background: var(--brand-color);*/
-    padding: 22px 16px;
-    border-bottom: 1px solid var(--brand-color);
-    position: sticky;
-    top: 0;
-}
+@import "all.css";
 
 .flex-center-between {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.container {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-    /*background: red;*/
 }
 
 .info-box {
@@ -65,7 +23,8 @@ button.bars {
     /*animation-play-state:playing;*/
     animation-delay: 1s;
 
-    &:hover {
+    &:hover,
+    &:focus-within {
         animation-play-state:paused;
     }
 }
@@ -98,6 +57,30 @@ button.bars {
     opacity: 1;
     transform: translateY(0);
     transition: transform .1s ease-out;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 500px;
+}
+
+th {
+    background: var(--brand-color);
+    color: var(--light-color);
+}
+
+tr, td, th {
+    border: 1px solid var(--brand-color);
+    text-align: left;
+    padding: 16px 8px;
 }
 
 @media (min-width: 500px) {
