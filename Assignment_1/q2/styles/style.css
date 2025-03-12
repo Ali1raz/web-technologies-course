@@ -1,5 +1,10 @@
 @import "all.css";
 
+.name {
+    background: #ff00ff;
+    color: #ffffff;
+}
+
 .flex-center-between {
     display: flex;
     align-items: center;
@@ -15,7 +20,7 @@ button.bars {
     height: 100%;
     color: var(--light-color);
     border: none;
-    padding: 8px 24px;
+    padding: 12px 24px;
     font-size: 16px;
 }
 
@@ -27,36 +32,42 @@ button.bars {
     &:focus-within {
         animation-play-state:paused;
     }
+
+    &:hover + .info,
+    &:focus-within + .info { /* sibling selector*/
+        opacity: 1;
+        transform: translateY(0);
+        transition: transform .1s ease-out;
+    }
 }
 
 .info {
     position: absolute;
     top:40px;
     right:10px;
-    padding: 8px 24px;
     width: 220px;
     background: var(--light-color);
+    /*border: var(--brand-border-width) solid var(--brand-color);*/
     color: var(--dark-color);
     display: flex;
     align-items: start;
     flex-direction: column;
-    text-transform: capitalize;
+    text-transform: uppercase;
 
     transform: translateY(20px) ;
     opacity: 0;
     transition: transform .3s ease-in, opacity 0s ease;
+
+    & > span {
+        padding: 12px 16px;
+        /*--brand-border-width: 0;*/
+    }
 
     & hr {
         border: 2px solid var(--brand-color);
         width: 100%;
         margin-block: 8px;
     }
-}
-
-.bars:hover + .info { /* sibling selector*/
-    opacity: 1;
-    transform: translateY(0);
-    transition: transform .1s ease-out;
 }
 
 main {
@@ -78,12 +89,12 @@ th {
 }
 
 tr, td, th {
-    border: 1px solid var(--brand-color);
+    border: 2px solid var(--light-color);
     text-align: left;
     padding: 16px 8px;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
     .bars {
         display: none;
     }
@@ -94,14 +105,16 @@ tr, td, th {
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 24px;
         background: none;
         flex-direction: row;
         text-transform: uppercase;
         opacity: 1;
         transform: none;
         transition: none;
+
+        & > span {
+            padding: 12px 16px;
+        }
 
         hr {display: none}
     }
