@@ -1,0 +1,42 @@
+svg {
+    font-size: 150px;
+    animation: stroke 3s alternate infinite;
+    fill: var(--color-violet);
+}
+
+.brand svg {
+    font-size: 50px;
+    animation: stroke 3s alternate infinite;
+    fill: var(--color-violet);
+    border: 2px solid red;
+}
+
+@keyframes stroke {
+    0%,
+    20% {
+        stroke-dashoffset: 25%;
+        stroke-dasharray: 0 50%;
+        fill: rgba(72, 138, 204, 0);
+        stroke: rgba(54, 95, 160, 1);
+        stroke-width: 2;
+    }
+
+    70% {
+        fill: rgba(72, 138, 204, 0);
+        stroke: rgba(54, 95, 160, 1);
+    }
+
+    80%,
+    30% {
+        fill: rgba(72, 138, 204, 0);
+        stroke: rgba(54, 95, 160, 1);
+    }
+
+    100% {
+        stroke-dashoffset: -25%;
+        stroke-dasharray: 50% 0;
+        fill: rgba(72, 138, 204, 1);
+        stroke: rgba(54, 95, 160, 1);
+        stroke-width: 0;
+    }
+}
