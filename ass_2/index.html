@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 2 - WT</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <a
+          href="https://github.com/Ali1raz"
+          target="_blank"
+          rel="noopener noreferrer"
+          >@ali1raz</a
+        >
+      </div>
+      <div class="links">
+        <span><a href="#">Home</a></span>
+        <span><a href="grid.html">Grid</a></span>
+        <span><a href="#about">About</a></span>
+      </div>
+    </header>
+    <main>
+      <div class="profile">
+        <table border="2">
+          <thead>
+            <tr>
+              <th>Reg. No</th>
+              <th>Name</th>
+              <th>Class</th>
+              <th>Marks</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>118</td>
+              <td>Ali Raza</td>
+              <td>BSE</td>
+              <td>98</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="feedback">
+        <form id="formfeedback">
+          <div>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Ali Raza"
+              required
+            />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="abc@gmail.com"
+              required
+            />
+          </div>
+          <div>
+            <label for="feedback-text">Feedback</label>
+            <textarea
+              type="text"
+              name="feedback-text"
+              id="feedback-te"
+              placeholder="Ali Raza"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label for="rating">Rating</label>
+            <select name="rating" id="rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
+    </main>
+    <section id="about">
+      <div>
+        <h1>Ali Raza</h1>
+        <h3>FA22-BSE-118</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolore
+          corporis aut non aliquid adipisci possimus officiis atque hic
+          mollitia?
+        </p>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --color-light: #f9efed;
+    --color-dark: #212121;
+    --color-blue: #d0d3fd;
+    --color-pink: #fee3e4;
+    --color-violet: #fedffe;
+    --color-green: #e5f4f1;
+
+    --color-header: #e5f4f107;
+
+    --box-shadow-dark: 1px 1px var(--color-dark);
+    --box-shadow-light: 1px 1px var(--color-light);
+
+    --brand-border-radius: 0px;
+    --brand-border:  2px solid var(--color-dark);
+}
+
+body {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: "Poppins", sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 16px;
+
+    height: 100vh;
+    width: 100%;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+image {
+    width: 100%;
+}
+
+
+header {
+    position: sticky;
+    top: 10px;
+    background: var(--color-header);
+    backdrop-filter: blur(10px);
+    color: #212121;
+    padding: 16px 8px;
+    border: var(--brand-border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+    & .brand {
+        font-family: cursive;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    & .links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 3rem;
+    }
+}
+
+
+section {
+    width: 100%;
+    color: var(--color-dark);
+    min-height: 300px;
+    background-color: var(--color-violet);
+    border: var(--brand-border);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        text-align: center;
+        padding: 20px;
+    }
+    h1 {
+        font-size: 6rem;
+        text-align: center;
+        transition: 0.3s all ease-in;
+    }
+    p {
+        margin-top: 2rem;
+    }
+}
+
+
+@media (max-width: 600px) {
+    & .links {
+        gap: 2rem;
+    }
+
+    section h1 {
+        font-size: 4rem;
+    }
+
+}

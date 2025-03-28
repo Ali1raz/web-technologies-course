@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url(constants.css);
+
+      body {
+        max-width: 950px;
+      }
+
+      header {
+        z-index: 1;
+      }
+
+      main {
+        width: 100%;
+        min-height: 700px;
+        border: var(--brand-border);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 0;
+
+        h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        & > div {
+          width: 100%;
+          padding: 1rem;
+        }
+      }
+
+      .mosaic {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+
+      .mosaic-block {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        min-height: 230px;
+      }
+
+      .mosaic-block img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .mosaic-block:hover img {
+        transform: scale(1.08);
+      }
+
+      .mosaic-block h2 {
+        position: relative;
+        padding: 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-light);
+        background: linear-gradient(rgba(0, 0, 0, 0.3) 10% transparent);
+        user-select: none;
+      }
+
+      .mosaic-layout-2,
+      .mosaic-layout-3 {
+        grid-template-columns: 2fr, 1fr;
+      }
+
+      .mosaic-layout-3 .mosaic-block:nth-child(1) {
+        /* grid-area: 1 / 1 / 2 / 3; */
+        grid-row: span 2;
+      }
+
+      .mosaic-layout-4 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .mosaic-layout-4 .mosaic-block:nth-child(1) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+      .mosaic-layout-4 .mosaic-block:nth-child(4) {
+        grid-column-start: 2;
+        grid-column-end: 4;
+      }
+
+      .mosaic-layout-4 .mosaic-block:nth-child(5) {
+        display: none;
+      }
+
+      .mosaic-layout-5 .mosaic-block {
+        min-height: 170px;
+      }
+
+      .mosaic-layout-5 .mosaic-block:nth-child(1),
+      .mosaic-layout-5 .mosaic-block:nth-child(4) {
+        grid-row: span 3;
+      }
+      .mosaic-layout-5 .mosaic-block:nth-child(2),
+      .mosaic-layout-5 .mosaic-block:nth-child(3),
+      .mosaic-layout-5 .mosaic-block:nth-child(5) {
+        grid-row: span 2;
+      }
+
+      @media (max-width: 500px) {
+        .mosaic {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <a
+          href="https://github.com/Ali1raz"
+          target="_blank"
+          rel="noopener noreferrer"
+          >@ali1raz</a
+        >
+      </div>
+      <div class="links">
+        <span><a href="index.html">Home</a></span>
+        <span><a href="grid.html">Grid</a></span>
+        <span><a href="#about">About</a></span>
+      </div>
+    </header>
+    <main>
+      <div>
+        <h2>Mosaic Layout</h2>
+        <div class="mosaic mosaic-layout-5">
+          <div class="mosaic-block">
+            <img src="assets/image_4.jpeg" alt="image_4" />
+            <h2>Image 4</h2>
+          </div>
+          <div class="mosaic-block">
+            <img src="assets/image_2.png" alt="image_2" />
+            <h2>Image 4</h2>
+          </div>
+          <div class="mosaic-block">
+            <img src="assets/image_3.jpg" alt="image_3" />
+            <h2>Image 4</h2>
+          </div>
+          <div class="mosaic-block">
+            <img src="assets/image_1.jpg" alt="image_1" />
+            <h2>Image 4</h2>
+          </div>
+          <div class="mosaic-block">
+            <img src="assets/image_6.jpg" alt="image_6" />
+            <h2>Image 6</h2>
+          </div>
+        </div>
+      </div>
+    </main>
+    <section id="about">
+      <div>
+        <h1>Ali Raza</h1>
+        <h3>FA22-BSE-118</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolore
+          corporis aut non aliquid adipisci possimus officiis atque hic
+          mollitia?
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
