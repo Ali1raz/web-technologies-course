@@ -1,35 +1,28 @@
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $userId = $_POST["search"];
-
+    $userSearch = $_POST["search"];
     try {
         require_once "includes/db.inc.php";
 
-        $query = "select * from comments where user_id = :userId";
+        $query = "SELECT c.message, c.user_id, u.username, c.created_at 
+                   FROM comments c 
+                   JOIN users u ON u.id = c.user_id 
+                   WHERE u.username = :userSearch";
 
         $stmt = $pdo->prepare($query);
 
-        $stmt->bindParam(":userId", $userId);
+        $stmt->bindParam(":userSearch", $userSearch);
 
         $stmt->execute();
-
+        
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+        
         $pdo = null;
         $stmt = null;
-
-        // header("Location: index.php");
-
     } catch (PDOException $e) {
         die("QUERY FAILED: " . $e->getMessage());
     }
-
-} else {
-    header("Location: index.php");
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -38,26 +31,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>php First website</title>
-    <link rel="stylesheet" href="./style/styles.css">
+    <style>
+        body {
+            font-family: poppins;
+            color: #fff;
+            background: #222;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+        }
+        .comment {
+            background: #000;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <main>
+    <article>
         <h3>Search Results</h3>
-        <?php
-        if (empty($result)) {
-            echo "<div>";
-            echo "<p>There is no result.</p>";
-            echo "</div>";
-        } else {
-            foreach($result as $row) {
-                echo "<div class='comment'>";
-                echo "<span> " . htmlspecialchars($row["user_id"]) . "</span>";
-                echo "<span> " . htmlspecialchars($row["created_at"]) . "</span>";
-                echo "<p> " . htmlspecialchars($row["message"]) . "</p>";
-                echo "</div>";
-            }
-        }
-        ?>
-    </main>
+        <?php if (isset($result) && !empty($result)) { ?>
+            <?php foreach($result as $row) { ?>
+                <div class='comment'>
+                    <span> <?php echo htmlspecialchars($row["username"]); ?> </span>
+                    <span> <?php echo htmlspecialchars($row["created_at"]); ?> </span>
+                    <p> <?php echo htmlspecialchars($row["message"]); ?> </p>
+                </div>
+            <?php } ?>
+        <?php } else { ?>
+            <div>
+                <p>There is no result.</p>
+            </div>
+        <?php } ?>
+        </article>
 </body>
 </html>
