@@ -56,5 +56,14 @@
         </form>
     </main>
 
+    <main style="background: red;">
+        <h1>DELETE Account</h1>
+        <form action="includes/deleteaccount.inc.php" method="post">
+            <input required type="text" name="username" placeholder="username">
+            <input required type="password" name="password" placeholder="password">
+            <button>Delete</button>
+        </form>
+    </main>
+
 </body>
 </html>

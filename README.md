@@ -1,4 +1,4 @@
-# PHP course
+# PHP simple CRUD
 
 ## Default settings for XAMPP:
 
@@ -190,4 +190,32 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     header("Location: ../index.php");
 }
 ``
+```
+
+# DELETE:
+
+## Example:
+
+```php
+// index.php
+<form action="includes/deleteaccount.inc.php" method="post">
+    <input required type="text" name="username" placeholder="username">
+    <input required type="password" name="password" placeholder="password">
+    <button>Delete</button>
+</form>
+```
+
+```php
+// includes/deleteaccount.inc.php
+// previous steps
+require_once 'db.inc.php';
+
+$query = 'DELETE FROM users where username = :username AND pwd = :pwd;';
+
+$stmt = $pdo->prepare($query);
+
+$stmt->bindParam(":username", $username);
+$stmt->bindParam(":pwd", $pwd);
+
+$stmt->execute();
 ```
