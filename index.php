@@ -33,6 +33,9 @@
             }
         }
 
+        main.search {
+            height: 50%;
+        }
         
     </style>
 </head>
@@ -62,6 +65,14 @@
             <input required type="text" name="username" placeholder="username">
             <input required type="password" name="password" placeholder="password">
             <button>Delete</button>
+        </form>
+    </main>
+
+    <main class="search">
+        <h1>READ comments</h1>
+        <form action="search.php" method="post">
+            <input type="text" name="search" placeholder="Enter id to search">
+            <button>Search</button>
         </form>
     </main>
 
