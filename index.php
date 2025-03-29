@@ -4,40 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>php First website</title>
-    <style>
-
-        body {
-            font-family: poppins;
-            color: #fff;
-            background: #222;
-            margin: 0;
-            width: 100%;
-            height: 100vh;
-        }
-
-        main {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items:center;
-            justify-content: center;
-
-            h1 {
-                position: sticky;
-                top: 0;
-                text-align: center;
-                width: 100%;
-                font-size: 3rem;
-                background: inherit;
-            }
-        }
-
-        main.search {
-            height: 50%;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="./style/styles.css">
 </head>
 <body>
     <main style="background: inherit;">

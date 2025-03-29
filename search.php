@@ -38,23 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>php First website</title>
-    <style>
-
-        body {
-            font-family: poppins;
-            color: #fff;
-            background: #222;
-            margin: 0;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .comment {
-            background: #000;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="./style/styles.css">
 </head>
 <body>
     <main>
