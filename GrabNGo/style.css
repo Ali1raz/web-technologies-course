@@ -39,6 +39,24 @@ input[type="checkbox"] {
     }
 }
 
+form {
+    display: flex;
+    align-items: center;
+    gap: 0;
+
+    input[type="text"]#search {
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 2px solid var(--red);
+    }
+
+    button {
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 2px solid var(--red);
+    }
+}
+
 header {
     display: flex;
     align-items: center;
@@ -149,6 +167,10 @@ section {
             row-gap: 18px;
             z-index: 1000;
         }
+    }
+
+    form {
+        display: none;
     }
 
     .hero {
