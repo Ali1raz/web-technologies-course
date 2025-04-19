@@ -68,7 +68,7 @@ header {
     ul.menu-list {
         display: flex;
         flex-direction: row;
-        column-gap: 12px;
+        column-gap: 18px;
         transition: all 0.2s;
     }
 
@@ -81,7 +81,7 @@ section {
 .hero {
     margin: 10vh auto 0 auto;
     max-width: 1200px;
-    padding: 4rem;
+    padding: 2rem;
     height: 70vh;
     display: flex;
     align-items: center;
@@ -106,7 +106,7 @@ section {
         width: 100%;
         top: 0;
         border-radius: 0;
-        padding: 8px;
+        padding: 0 18px ;
 
         .menu {
             display: block;
@@ -146,13 +146,13 @@ section {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 18px;
+            row-gap: 18px;
             z-index: 1000;
         }
     }
 
     .hero {
-        background-position: bottom;
+        background-position: center;
         background-size: contain;
         background-repeat: no-repeat;
     }
