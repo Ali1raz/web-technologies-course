@@ -4,7 +4,56 @@
     padding: 0;
 }
 
+:root {
+    --red: #ff4100;
+    --yellow: #ffc700;
+}
+
 body {
-    background-color: #ff4100;
-    color: #ffc700;
+    background-color: var(--red);
+    color: var(--yellow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.hero {
+    margin: 10vh auto 0 auto;
+    max-width: 1200px;
+    padding: 4rem ;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url(assets/forks.webp);
+    background-size: cover;
+    background-position: center;
+
+    svg path {
+        fill: transparent;
+        stroke: var(--yellow);
+        stroke-width: 1;
+        stroke-dasharray:400;
+        stroke-dashoffset: 400;
+        animation: textAnimation 3s ease-in-out 1 forwards;
+    }
+}
+
+@media (max-width: 780px) {
+    .hero {
+        background-position: bottom;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
+@keyframes textAnimation {
+    0% {
+        stroke-dashoffset: 400;
+    } 80% {
+        fill: transparent;
+    } 100% {
+        stroke-dashoffset: 0;
+        fill: var(--yellow);
+    }
 }
