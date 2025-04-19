@@ -96,6 +96,11 @@ section {
     height: 100vh;
 }
 
+section:nth-of-type(2n)  {
+    color: #000;
+    background: white;
+}
+
 .hero {
     margin: 10vh auto 0 auto;
     max-width: 1200px;
@@ -116,6 +121,46 @@ section {
         stroke-dasharray:400;
         stroke-dashoffset: 400;
         animation: textAnimation 3s ease-in-out 1 forwards;
+    }
+}
+
+
+footer {
+    background: #000;
+    color: #fff;
+    padding: 14px;
+
+    h1 {
+        text-align: center;
+    }
+
+    &::selection {
+        /* color: var(--red); */
+        background-color: var(--yellow);
+    }
+
+    .container {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 18px;
+
+        a {
+            color: var(--red);
+        }
+
+        & .socials a {
+            margin-bottom: 14px;
+        }
+        
+
+        h3 {
+            margin-bottom: 12px;
+        }
+
+        & > div > div {
+            margin-bottom: 16px;
+        }
     }
 }
 
