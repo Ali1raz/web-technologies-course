@@ -1,0 +1,59 @@
+@import url(utils.css);
+
+.menu-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.menu-card {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 300px;
+
+  & > div {
+    padding: 18px;
+  }
+}
+
+button.order-now {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.food-image {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.food-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .menu-section {
+    justify-content: space-evenly;
+  }
+
+  .menu-card {
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-card {
+    max-width: 100%;
+  }
+}
+
+.confirmation-message {
+  height: fit-content;
+}

@@ -1,14 +1,5 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --red: #ff4100;
-    --yellow: #ffc700;
-    --max-width: 600px;
-}
+@import url(utils.css);
+@import url(menu-sction.css);
 
 body {
     background-color: var(--red);
@@ -18,25 +9,13 @@ body {
     margin: 0 auto;
 }
 
-ul li {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
 input[type="checkbox"] {
    display: none;
 
-    & + label {
-        user-select: none;
-    }
+   & + label {
+    cursor: pointer;
+
+   }
 }
 
 form {
@@ -44,15 +23,7 @@ form {
     align-items: center;
     gap: 0;
 
-    input[type="text"]#search {
-        padding: 4px 8px;
-        border-radius: 4px;
-        border: 2px solid var(--red);
-    }
-
-    button {
-        padding: 4px 8px;
-        border-radius: 4px;
+    input[type="text"]#search, button {
         border: 2px solid var(--red);
     }
 }
@@ -68,6 +39,7 @@ header {
     border-radius: 52px;
     max-width: 768px;
     margin: 0 auto;
+    z-index: 100000;
 
     position: sticky;
     top: 12px;
@@ -93,7 +65,7 @@ header {
 }
 
 section {
-    height: 100vh;
+    min-height: 80vh;
 }
 
 section:nth-of-type(2n)  {
@@ -124,6 +96,25 @@ section:nth-of-type(2n)  {
     }
 }
 
+.hero-2 {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    place-items: center;
+
+    h1 {
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-size: clamp(1rem, 2vw + 1rem, 5rem);
+    }
+
+    & div img {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
 
 footer {
     background: #000;
@@ -222,6 +213,18 @@ footer {
         background-position: center;
         background-size: contain;
         background-repeat: no-repeat;
+    }
+
+    .hero-2 {
+        grid-template-columns: 1fr;
+        padding: 28px;
+        margin: 0 auto;
+        gap: 20px;
+    }
+
+    footer .container {
+        grid-template-columns: 1fr;
+
     }
 }
 

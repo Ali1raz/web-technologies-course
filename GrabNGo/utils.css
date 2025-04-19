@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --red: #ff4100;
+    --yellow: #ffc700;
+    --max-width: 600px;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+label {
+    user-select: none;
+}
+
+button, input[type="text"] {
+    padding: 4px 8px;
+    border-radius: 4px;
+}

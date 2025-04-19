@@ -18,3 +18,15 @@ document.querySelector("form.search").addEventListener("submit", (e) => {
     );
   }
 });
+
+document.querySelectorAll(".order-now").forEach((button) => {
+  button.addEventListener("click", function () {
+    const menuCard = button.parentElement;
+
+    const confirmationMessage = menuCard.querySelector(".confirmation-message");
+    confirmationMessage.textContent = `${
+      menuCard.querySelector("h3").textContent
+    } added to your order!`;
+    confirmationMessage.style.display = "block";
+  });
+});
