@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return Post::with('user')->latest()->get();
     }
 
 
@@ -52,7 +52,8 @@ class PostController extends Controller
         $post = $request->user()->posts()->create($validated);
         return [
             'message' => 'Post created',
-            'post' => $post
+            'post' => $post,
+            'user' => $request->user()
         ];
     }
 
@@ -84,8 +85,9 @@ class PostController extends Controller
 
         $post->update($validated);
         return [
-            'message' => 'Post updated',
-            'post' => $post
+            'message' => 'Post Updated',
+            'post' => $post,
+            'user' => $request->user()
         ];
     }
 
