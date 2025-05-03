@@ -53,7 +53,7 @@ class PostController extends Controller
         return [
             'message' => 'Post created',
             'post' => $post,
-            'user' => $request->user()
+            'user' => $post->user
         ];
     }
 
@@ -65,7 +65,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post;
+        return [
+            'post' => $post,
+            'user' => $post->user
+        ];
     }
 
     /**
@@ -87,7 +90,7 @@ class PostController extends Controller
         return [
             'message' => 'Post Updated',
             'post' => $post,
-            'user' => $request->user()
+            'user' => $post->user
         ];
     }
 
