@@ -73,7 +73,14 @@
                     autohide: false
                 }).show();
             });
+
+            // Initialize tooltips globally
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

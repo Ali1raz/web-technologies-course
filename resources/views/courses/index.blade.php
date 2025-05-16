@@ -17,21 +17,35 @@
 
     <div class="table-responsive">
         <table class="table table-striped">
-            <thead>                <tr>
+            <thead>
+                <tr>
                     <th>Title</th>
                     <th>Instructor</th>
                     <th>Credit Hours</th>
                     <th>Semester</th>
+                    <th>Created</th>
+                    <th>Last Updated</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($courses as $course)
-                <tr>
+                    <tr>
                         <td>{{ $course->title }}</td>
                         <td>{{ $course->instructor }}</td>
                         <td>{{ $course->credit_hours }}</td>
-                        <td>{{ $course->semester }}</td>                        <td>
+                        <td>{{ $course->semester }}</td>
+                        <td>
+                            <span class="text-muted" title="{{ $course->created_at?->format('F j, Y g:i A') }}" data-bs-toggle="tooltip">
+                                {{ $course->created_at?->diffForHumans() }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-muted" title="{{ $course->updated_at?->format('F j, Y g:i A') }}" data-bs-toggle="tooltip">
+                                {{ $course->updated_at?->diffForHumans() }}
+                            </span>
+                        </td>
+                        <td>
                             <div class="btn-group" role="group">
                                 <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-primary btn-sm me-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -57,10 +71,22 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">No courses found.</td>
+                        <td colspan="7" class="text-center">No courses found.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+
+    @push('scripts')
+    <script>
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+    @endpush
 @endsection
