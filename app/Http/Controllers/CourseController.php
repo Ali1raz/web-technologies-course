@@ -75,7 +75,8 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -87,7 +88,18 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $course = Course::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'instructor' => 'required|max:255',
+            'credit_hours' => 'required|integer|min:1',
+            'semester' => 'required|max:255',
+        ]);
+
+        $course->update($validated);
+        return redirect()->route('courses.index')
+            ->with('success', 'Course updated successfully.');
     }
 
     /**
