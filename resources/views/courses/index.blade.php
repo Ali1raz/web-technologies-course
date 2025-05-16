@@ -6,11 +6,23 @@
     <div class="row mb-4">
         <div class="col-md-6">
             <h2>Course List</h2>
-        </div>
-        <div class="col-md-6">
+        </div>        <div class="col-md-6">
             <form class="d-flex" action="{{ route('courses.index') }}" method="GET">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search courses..." value="{{ request('search') }}">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <div class="input-group">
+                    <input class="form-control" type="search" name="search" placeholder="Search courses..." value="{{ request('search') }}">
+                    @if(request('search'))
+                        <button type="button" class="btn btn-outline-secondary" onclick="clearSearch(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    @endif
+                    <button class="btn btn-outline-primary" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -76,9 +88,7 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
-
-    @push('scripts')
+    </div>    @push('scripts')
     <script>
         // Initialize tooltips
         document.addEventListener('DOMContentLoaded', function() {
@@ -87,6 +97,14 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
+
+        // Clear search input and submit form
+        function clearSearch(button) {
+            const form = button.closest('form');
+            const input = form.querySelector('input[name="search"]');
+            input.value = '';
+            form.submit();
+        }
     </script>
     @endpush
 @endsection
