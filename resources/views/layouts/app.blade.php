@@ -6,11 +6,12 @@
     <title>Course Management - @yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Custom styles for active nav links */
         .nav-link.active {
             color: #fff !important;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 0.25rem;
+            /* text-decoration: underline;
+            text-decoration-color: rgba(255, 255, 255, 1); */
+            
+            font-weight: 700;
         }
     </style>
 </head>
