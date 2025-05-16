@@ -51,3 +51,49 @@ COMSATS University wants to create a basic web application to manage and display
 -   `Composer`: Download and install from getcomposer.org.
 -   A web server: (e.g., `XAMPP` or `WAMP`), since this is a `PHP` project.
 -   `Node.js` & npm (if you need to run frontend tasks): nodejs.org.
+
+2. Clone the Repository
+Open Command Prompt and run:
+
+```sh
+git clone https://github.com/Ali1raz/student_admin_course.git
+cd student_admin_course
+```
+
+3. Install Dependencies
+PHP Dependencies
+
+```sh
+composer install
+```
+
+Node Dependencies (if required)
+Check if there's a package.json file. If yes:
+
+```sh
+npm install
+```
+
+4. Configure Environment
+Copy the example environment file:
+
+```sh
+copy .env.example .env
+```
+
+Open .env in a text editor and set up your environment variables (database, app key, etc.).
+
+5. Set Up Database
+Create a new database in your preferred database (e.g., MySQL).
+Update your .env file with the database credentials.
+Run migrations:
+```sh
+php artisan migrate
+```
+
+6. Start the Development Server
+```sh
+php artisan serve
+```
+
+Visit `http://localhost:8000` in your browser.
