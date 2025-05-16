@@ -8,10 +8,24 @@
     <style>
         .nav-link.active {
             color: #fff !important;
-            /* text-decoration: underline;
-            text-decoration-color: rgba(255, 255, 255, 1); */
-            
             font-weight: 700;
+        }
+        
+        /* Toast positioning and animation */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .toast {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .toast.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -45,6 +59,21 @@
         @yield('content')
     </div>
 
+    <div class="toast-container">
+        @yield('toast')
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show toasts on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            var toasts = document.querySelectorAll('.toast');
+            toasts.forEach(function(toast) {
+                new bootstrap.Toast(toast, {
+                    autohide: false
+                }).show();
+            });
+        });
+    </script>
 </body>
 </html>

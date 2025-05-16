@@ -46,3 +46,15 @@
         </div>
     </div>
 @endsection
+
+@section('toast')
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-error text-dark">
+            <strong class="me-auto">Admin Access</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            This page should be for administrative use only.
+        </div>
+    </div>
+@endsection
