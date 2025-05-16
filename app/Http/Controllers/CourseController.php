@@ -44,6 +44,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        // server side validation the request data
         $validated = $request->validate([
             'title' => 'required|max:255',
             'instructor' => 'required|max:255',

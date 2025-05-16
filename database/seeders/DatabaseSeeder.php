@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // add fake data
         $this->call([
             CourseSeeder::class
         ]);

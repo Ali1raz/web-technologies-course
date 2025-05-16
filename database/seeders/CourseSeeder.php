@@ -14,6 +14,9 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
+        // Add fake data
+        // You can use a library like Faker to generate random data
+        // For simplicity, I am using static data here
         $courses = [
             [
                 'title' => 'HTML & CSS Fundamentals',
