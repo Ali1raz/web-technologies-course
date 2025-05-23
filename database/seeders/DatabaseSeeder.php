@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,12 +18,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $password = Hash::make('12345678');
+
         DB::statement("
             INSERT INTO users (name, email, password, role, created_at, updated_at) 
             VALUES (
                 'Admin User',
                 'admin@example.com',
-                '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                '$password',
                 'admin',
                 NOW(),
                 NOW()
@@ -34,7 +37,7 @@ class DatabaseSeeder extends Seeder
             VALUES (
                 'Customer User',
                 'customer@example.com',
-                '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                '$password',
                 'customer',
                 NOW(),
                 NOW()
