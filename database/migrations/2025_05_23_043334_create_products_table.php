@@ -14,18 +14,24 @@ return new class extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            DB::statement("
+                CREATE TABLE products (
+                    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    price DECIMAL(10,2) NOT NULL,
+                    stock INT NOT NULL DEFAULT 0,
+                    description TEXT,
+                    created_at TIMESTAMP NULL,
+                    updated_at TIMESTAMP NULL
+                )
+            ");
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('products');
+        DB::statement("
+            drop table products if exists
+        ");
     }
 };
