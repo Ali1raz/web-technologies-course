@@ -1,15 +1,79 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.app')
 
-<head>
-    <title>Edit Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Edit Profile')
+
+@section('content')
+<div class="card p-4 shadow-lg">
+    <h2 class="mb-4 text-primary">Edit Your Profile</h2>
+
+    {{-- Display Errors --}}
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Success Message --}}
+    @if(session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+    @endif
+
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+        @csrf
+
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" name="name" class="form-control" value="{{ $student->name }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email:
+                <span class="text-danger ms-4">You cant change your email</span>
+            </label>
+            <input type="email" class="form-control" value="{{ $student->email }}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Department:</label>
+            <input type="text" name="department" class="form-control" value="{{ $student->department }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">New Password (optional):</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Confirm Password:</label>
+            <input type="password" name="password_confirmation" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Profile Picture (optional):</label>
+            <input type="file" name="profile_picture" class="form-control">
+        </div>
+
+        @if ($student->profile_picture)
+        <div class="mb-3">
+            <label class="form-label">Current Picture:</label><br>
+            <img src="{{ asset('storage/' . $student->profile_picture) }}" width="100" class="rounded-circle shadow">
+        </div>
+        @endif
+
+        <button type="submit" class="btn btn-success">Update Profile</button>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary ms-2">Back to Dashboard</a>
+    </form>
+</div>
+@endsection
+
+@section('styles')
 <style>
-    body {
-        background: linear-gradient(to right, #74ebd5, #acb6e5);
-    }
-
     .card {
         border: none;
         border-radius: 12px;
@@ -42,80 +106,4 @@
         background-color: #636e72;
     }
 </style>
-
-
-<body class="bg-light">
-
-    <div class="container mt-5">
-        <div class="card p-4 shadow-lg">
-            <h2 class="mb-4 text-primary">Edit Your Profile</h2>
-
-            {{-- Display Errors --}}
-            @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
-            {{-- Success Message --}}
-            @if(session('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-            @endif
-
-            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
-                @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Name:</label>
-                    <input type="text" name="name" class="form-control" value="{{ $student->name }}">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Email:
-                        <span class="text-danger ms-4">You cant change your email</span>
-                    </label>
-                    <input type="email" class="form-control" value="{{ $student->email }}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Department:</label>
-                    <input type="text" name="department" class="form-control" value="{{ $student->department }}">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">New Password (optional):</label>
-                    <input type="password" name="password" class="form-control">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Confirm Password:</label>
-                    <input type="password" name="password_confirmation" class="form-control">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Profile Picture (optional):</label>
-                    <input type="file" name="profile_picture" class="form-control">
-                </div>
-
-                @if ($student->profile_picture)
-                <div class="mb-3">
-                    <label class="form-label">Current Picture:</label><br>
-                    <img src="{{ asset('storage/' . $student->profile_picture) }}" width="100" class="rounded-circle shadow">
-                </div>
-                @endif
-
-                <button type="submit" class="btn btn-success">Update Profile</button>
-                <a href="{{ route('dashboard') }}" class="btn btn-secondary ms-2">Back to Dashboard</a>
-            </form>
-        </div>
-    </div>
-
-</body>
-
-</html>
+@endsection
