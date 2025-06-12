@@ -68,7 +68,7 @@
             </div>
             @endif
 
-            <form method="POST" action="/edit-profile" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -77,8 +77,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Email:</label>
-                    <input type="email" name="email" class="form-control" value="{{ $student->email }}" disabled>
+                    <label class="form-label">Email:
+                        <span class="text-danger ms-4">You cant change your email</span>
+                    </label>
+                    <input type="email" class="form-control" value="{{ $student->email }}" readonly>
                 </div>
 
                 <div class="mb-3">
@@ -109,7 +111,7 @@
                 @endif
 
                 <button type="submit" class="btn btn-success">Update Profile</button>
-                <a href="/dashboard" class="btn btn-secondary ms-2">Back to Dashboard</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary ms-2">Back to Dashboard</a>
             </form>
         </div>
     </div>

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Student;
+use App\Models\Course;
+use App\Models\StudentCourse;
 use Illuminate\Validation\ValidationException;
 
 class StudentController extends Controller
@@ -114,10 +118,9 @@ class StudentController extends Controller
     {
         $student = Session::get('student');
         if (!$student) {
-            return redirect('/login');
+            return redirect()->route('login');
         }
-
-        return view('edit-profile', ['student' => $student]);
+        return view('profile.edit-profile', compact('student'));
     }
 
     public function updateProfile(Request $request)
@@ -126,14 +129,12 @@ class StudentController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:students,email,' . $student->id,
             'department' => 'nullable|string|max:255',
             'password' => 'nullable|min:6|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $student->name = $request->name;
-        $student->email = $request->email;
         $student->department = $request->department;
 
         if ($request->filled('password')) {
@@ -150,7 +151,7 @@ class StudentController extends Controller
         $student->save();
         Session::put('student', $student);
 
-        return redirect('/edit-profile')->with('message', 'Profile updated successfully.');
+        return redirect()->route('dashboard')->with('message', 'Profile updated successfully.');
     }
 
     public function showRegistrationForm()
