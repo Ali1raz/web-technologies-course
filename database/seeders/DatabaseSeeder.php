@@ -1,13 +1,15 @@
-use App\Models\Course;
+<?php
 
-Course::create([
-    'title' => 'Web Technologies',
-    'credit_hours' => 3,
-    'instructor' => 'Dr. Ali Khan'
-]);
+namespace Database\Seeders;
 
-Course::create([
-    'title' => 'Database Systems',
-    'credit_hours' => 4,
-    'instructor' => 'Prof. amna'
-]);
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
+        $this->call([
+            CourseSeeder::class
+        ]);
+    }
+}
