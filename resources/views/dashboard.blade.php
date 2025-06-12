@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Student Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -10,12 +11,14 @@
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         .dashboard-card {
             background-color: white;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
+
         .profile-pic {
             width: 100px;
             height: 100px;
@@ -25,6 +28,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container py-5">
@@ -33,9 +37,9 @@
 
             <div class="text-center mb-4">
                 @if ($student->profile_picture)
-                    <img src="{{ asset('uploads/' . $student->profile_picture) }}" alt="Profile" class="profile-pic">
+                <img src="{{ asset('uploads/' . $student->profile_picture) }}" alt="Profile" class="profile-pic">
                 @else
-                    <img src="https://via.placeholder.com/100" class="profile-pic" alt="No Picture">
+                <img src="https://via.placeholder.com/100" class="profile-pic" alt="No Picture">
                 @endif
             </div>
 
@@ -45,10 +49,14 @@
 
             <div class="mt-4 text-center">
                 <a href="/edit-profile" class="btn btn-primary me-2">✏️ Edit Profile</a>
-                <a href="/logout" class="btn btn-danger">🚪 Logout</a>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">🚪 Logout</button>
+                </form>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>

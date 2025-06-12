@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseRegistration;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
 class CourseController extends Controller
 {
-    // Display all courses with registration status
     public function index()
     {
         $student_id = Auth::id();
@@ -33,7 +33,6 @@ class CourseController extends Controller
         return view('courses.index', compact('courses'));
     }
 
-    // Register the logged-in student for a course
     public function register($course_id)
     {
         $student_id = Auth::id();
@@ -63,7 +62,6 @@ class CourseController extends Controller
         }
     }
 
-    // Unregister the logged-in student from a course
     public function unregister($course_id)
     {
         $student_id = Auth::id();
@@ -78,7 +76,7 @@ class CourseController extends Controller
                 ->delete();
 
             return redirect()->back()->with('success', 'Course unregistered successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Course Unregistration Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to unregister. Please try again.');
         }

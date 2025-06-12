@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Edit Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,24 +48,24 @@
 
     <div class="container mt-5">
         <div class="card p-4 shadow-lg">
-            <h2 class="mb-4 text-primary">✏️ Edit Your Profile</h2>
+            <h2 class="mb-4 text-primary">Edit Your Profile</h2>
 
             {{-- Display Errors --}}
             @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
 
             {{-- Success Message --}}
             @if(session('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
             @endif
 
             <form method="POST" action="/edit-profile" enctype="multipart/form-data">
@@ -101,10 +102,10 @@
                 </div>
 
                 @if ($student->profile_picture)
-                    <div class="mb-3">
-                        <label class="form-label">Current Picture:</label><br>
-                        <img src="{{ asset('storage/' . $student->profile_picture) }}" width="100" class="rounded-circle shadow">
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Current Picture:</label><br>
+                    <img src="{{ asset('storage/' . $student->profile_picture) }}" width="100" class="rounded-circle shadow">
+                </div>
                 @endif
 
                 <button type="submit" class="btn btn-success">Update Profile</button>
@@ -114,4 +115,5 @@
     </div>
 
 </body>
+
 </html>

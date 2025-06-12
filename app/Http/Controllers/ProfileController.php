@@ -11,9 +11,8 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $student = Auth::user(); // Assuming 'students' are the authenticated users
+        $student = Auth::user();
 
-        // Load registered courses
         $registrations = CourseRegistration::with('course')
             ->where('student_id', $student->id)
             ->get();
