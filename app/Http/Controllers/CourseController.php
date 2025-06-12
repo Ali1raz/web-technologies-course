@@ -6,23 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseRegistration;
 use Exception;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
-
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $student_id = Auth::id();
+        $student = Session::get('student');
 
-        if (!$student_id) {
+        if (!$student) {
             return redirect()->route('login')->with('error', 'You must be logged in to view courses.');
         }
 
         $courses = Course::with('registrations')->get();
 
-        $registeredCourseIds = CourseRegistration::where('student_id', $student_id)
+        $registeredCourseIds = CourseRegistration::where('student_id', $student->id)
             ->pluck('course_id')
             ->toArray();
 
@@ -35,13 +34,13 @@ class CourseController extends Controller
 
     public function register($course_id)
     {
-        $student_id = Auth::id();
+        $student = Session::get('student');
 
-        if (!$student_id) {
+        if (!$student) {
             return redirect()->route('login')->with('error', 'You must be logged in to register.');
         }
 
-        $alreadyRegistered = CourseRegistration::where('student_id', $student_id)
+        $alreadyRegistered = CourseRegistration::where('student_id', $student->id)
             ->where('course_id', $course_id)
             ->exists();
 
@@ -51,11 +50,11 @@ class CourseController extends Controller
 
         try {
             CourseRegistration::create([
-                'student_id' => $student_id,
+                'student_id' => $student->id,
                 'course_id' => $course_id,
             ]);
 
-            return redirect()->back()->with('success', 'Course registered successfully!');
+            return redirect()->back()->with('message', 'Course registered successfully!');
         } catch (\Exception $e) {
             Log::error('Course Registration Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
@@ -64,18 +63,18 @@ class CourseController extends Controller
 
     public function unregister($course_id)
     {
-        $student_id = Auth::id();
+        $student = Session::get('student');
 
-        if (!$student_id) {
+        if (!$student) {
             return redirect()->route('login')->with('error', 'You must be logged in to unregister.');
         }
 
         try {
-            CourseRegistration::where('student_id', $student_id)
+            CourseRegistration::where('student_id', $student->id)
                 ->where('course_id', $course_id)
                 ->delete();
 
-            return redirect()->back()->with('success', 'Course unregistered successfully.');
+            return redirect()->back()->with('message', 'Course unregistered successfully.');
         } catch (Exception $e) {
             Log::error('Course Unregistration Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to unregister. Please try again.');
