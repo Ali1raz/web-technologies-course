@@ -2,82 +2,115 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseRegistration;
-use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $student = Session::get('student');
+        try {
+            $student = Session::get('student');
+            if (!$student) {
+                Session::flush();
+                return redirect()->route('login');
+            }
 
-        if (!$student) {
-            return redirect()->route('login')->with('error', 'You must be logged in to view courses.');
+            $query = Course::query();
+
+            // Search by title or instructor (partial match)
+            if ($request->filled('search')) {
+                $searchTerm = $request->input('search');
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('title', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('instructor', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+                });
+            }
+
+            $courses = $query->orderBy('title')->get();
+
+            // Get registered courses for the student
+            $registeredCourseIds = CourseRegistration::where('student_id', $student->id)
+                ->pluck('course_id')
+                ->toArray();
+
+            // Add registration status to each course
+            $courses->each(function ($course) use ($registeredCourseIds) {
+                $course->is_registered = in_array($course->id, $registeredCourseIds);
+            });
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('courses._table', compact('courses'))->render()
+                ]);
+            }
+
+            return view('courses.index', compact('courses'));
+        } catch (\Exception $e) {
+            Log::error('Error in CourseController@index: ' . $e->getMessage());
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Failed to load courses'], 500);
+            }
+            return back()->with('error', 'Failed to load courses. Please try again.');
         }
-
-        $courses = Course::with('registrations')->get();
-
-        $registeredCourseIds = CourseRegistration::where('student_id', $student->id)
-            ->pluck('course_id')
-            ->toArray();
-
-        foreach ($courses as $course) {
-            $course->is_registered = in_array($course->id, $registeredCourseIds);
-        }
-
-        return view('courses.index', compact('courses'));
     }
 
-    public function register($course_id)
+    public function register($id)
     {
-        $student = Session::get('student');
-
-        if (!$student) {
-            return redirect()->route('login')->with('error', 'You must be logged in to register.');
-        }
-
-        $alreadyRegistered = CourseRegistration::where('student_id', $student->id)
-            ->where('course_id', $course_id)
-            ->exists();
-
-        if ($alreadyRegistered) {
-            return redirect()->back()->with('error', 'You are already registered for this course.');
+        if (!Session::has('student_id')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         try {
+            $course = Course::findOrFail($id);
+            $studentId = Session::get('student_id');
+
+            // Check if already registered
+            $existingRegistration = CourseRegistration::where('student_id', $studentId)
+                ->where('course_id', $id)
+                ->first();
+
+            if ($existingRegistration) {
+                return response()->json(['message' => 'Already registered for this course'], 400);
+            }
+
+            // Create new registration
             CourseRegistration::create([
-                'student_id' => $student->id,
-                'course_id' => $course_id,
+                'student_id' => $studentId,
+                'course_id' => $id
             ]);
 
-            return redirect()->back()->with('message', 'Course registered successfully!');
+            return response()->json(['message' => 'Successfully registered for the course']);
         } catch (\Exception $e) {
-            Log::error('Course Registration Error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            Log::error('Course registration error: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to register for the course'], 500);
         }
     }
 
-    public function unregister($course_id)
+    public function unregister($id)
     {
-        $student = Session::get('student');
-
-        if (!$student) {
-            return redirect()->route('login')->with('error', 'You must be logged in to unregister.');
+        if (!Session::has('student_id')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         try {
-            CourseRegistration::where('student_id', $student->id)
-                ->where('course_id', $course_id)
-                ->delete();
+            $registration = CourseRegistration::where('student_id', Session::get('student_id'))
+                ->where('course_id', $id)
+                ->first();
 
-            return redirect()->back()->with('message', 'Course unregistered successfully.');
-        } catch (Exception $e) {
-            Log::error('Course Unregistration Error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Failed to unregister. Please try again.');
+            if (!$registration) {
+                return response()->json(['message' => 'Not registered for this course'], 400);
+            }
+
+            $registration->delete();
+            return response()->json(['message' => 'Successfully unregistered from the course']);
+        } catch (\Exception $e) {
+            Log::error('Course unregistration error: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to unregister from the course'], 500);
         }
     }
 }

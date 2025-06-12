@@ -17,130 +17,118 @@ class StudentController extends Controller
 {
     public function dashboard()
     {
-        if (!Session::has('student')) {
+        if (!Session::has('student_id')) {
             return redirect()->route('login');
         }
 
-        $student = Student::find(Session::get('student')->id);
+        $student = Student::find(Session::get('student_id'));
         if (!$student) {
-            Session::forget('student');
+            Session::flush();
             return redirect()->route('login');
         }
 
+        // Get registered courses with course details
         $registeredCourses = CourseRegistration::with('course')
-            ->where('student_id', $student->id)
+            ->where('student_id', Session::get('student_id'))
             ->get()
             ->pluck('course');
 
-        return view('dashboard', [
-            'student' => $student,
-            'registeredCourses' => $registeredCourses
-        ]);
+        return view('dashboard', compact('student', 'registeredCourses'));
     }
 
     public function showLoginForm()
     {
-        if (Session::has('student')) {
-            return redirect()->route('dashboard');
-        }
         return view('auth.login');
     }
 
     public function login(Request $request)
     {
-        try {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required|min:6'
-            ], [
-                'email.required' => 'Please enter your email address',
-                'email.email' => 'Please enter a valid email address',
-                'password.required' => 'Please enter your password',
-                'password.min' => 'Password must be at least 6 characters'
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $student = Student::where('email', $request->email)->first();
+
+        if (!$student || !Hash::check($request->password, $student->password)) {
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
             ]);
-
-            $student = Student::where('email', $request->email)->first();
-
-            if (!$student) {
-                return back()
-                    ->withErrors(['email' => 'No account found with this email address'])
-                    ->withInput($request->except('password'));
-            }
-
-            if (!Hash::check($request->password, $student->password)) {
-                return back()
-                    ->withErrors(['password' => 'Incorrect password'])
-                    ->withInput($request->except('password'));
-            }
-
-            Session::put('student', $student);
-            return redirect()->route('dashboard');
-        } catch (ValidationException $e) {
-            return back()
-                ->withErrors($e->errors())
-                ->withInput($request->except('password'));
-        } catch (\Exception $e) {
-            return back()
-                ->withErrors(['error' => 'An error occurred. Please try again.'])
-                ->withInput($request->except('password'));
         }
+
+        // Store student data in session
+        Session::put('student_id', $student->id);
+        Session::put('student_name', $student->name);
+        Session::put('student_email', $student->email);
+        Session::put('student_department', $student->department);
+        Session::put('student_profile_picture', $student->profile_picture);
+
+        return redirect()->route('dashboard');
     }
 
     public function logout()
     {
-        Session::forget('student');
+        Session::flush();
         return redirect()->route('login');
     }
 
     public function showChangePasswordForm()
     {
-        $student = Session::get('student');
-        if (!$student) {
-            return redirect('/login');
+        if (!Session::has('student_id')) {
+            return redirect()->route('login');
         }
 
-        return view('change-password', ['student' => $student]);
+        return view('profile.change-password');
     }
 
     public function changePassword(Request $request)
     {
+        if (!Session::has('student_id')) {
+            return redirect()->route('login');
+        }
+
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $student = Student::find(Session::get('student')->id);
+        $student = Student::find(Session::get('student_id'));
 
         if (!Hash::check($request->current_password, $student->password)) {
-            throw ValidationException::withMessages([
-                'current_password' => 'Current password is incorrect.',
+            return back()->withErrors([
+                'current_password' => 'The current password is incorrect.',
             ]);
         }
 
-        $student->password = Hash::make($request->new_password);
+        $student->password = Hash::make($request->password);
         $student->save();
 
-        return redirect('/dashboard')->with('message', 'Password changed successfully.');
+        return redirect()->route('profile.edit')->with('message', 'Password changed successfully!');
     }
 
     public function editProfile()
     {
-        $student = Session::get('student');
-        if (!$student) {
+        if (!Session::has('student_id')) {
             return redirect()->route('login');
         }
+
+        $student = Student::find(Session::get('student_id'));
         return view('profile.edit-profile', compact('student'));
     }
 
     public function updateProfile(Request $request)
     {
-        $student = Student::find(Session::get('student')->id);
+        if (!Session::has('student_id')) {
+            return redirect()->route('login');
+        }
+
+        $student = Student::find(Session::get('student_id'));
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'department' => 'nullable|string|max:255',
-            'password' => 'nullable|min:6|confirmed',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'department' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8|confirmed',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $student->name = $request->name;
@@ -151,71 +139,53 @@ class StudentController extends Controller
         }
 
         if ($request->hasFile('profile_picture')) {
-            $image = $request->file('profile_picture');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('uploads'), $imageName);
-            $student->profile_picture = $imageName;
+            if ($student->profile_picture) {
+                Storage::delete('public/' . $student->profile_picture);
+            }
+            $path = $request->file('profile_picture')->store('profile-pictures', 'public');
+            $student->profile_picture = $path;
+
+            // Update profile picture in session
+            Session::put('student_profile_picture', $path);
         }
 
         $student->save();
-        Session::put('student', $student);
 
-        return redirect()->route('dashboard')->with('message', 'Profile updated successfully.');
+        // Update session data
+        Session::put('student_name', $student->name);
+        Session::put('student_department', $student->department);
+
+        return redirect()->route('profile.edit')->with('message', 'Profile updated successfully!');
     }
 
     public function showRegistrationForm()
     {
-        if (Session::has('student')) {
-            return redirect()->route('dashboard');
-        }
         return view('auth.register');
     }
 
     public function register(Request $request)
     {
-        try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:students,email',
-                'password' => 'required|min:6|confirmed',
-                'department' => 'required|string|max:255',
-                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ], [
-                'name.required' => 'Please enter your name',
-                'name.max' => 'Name cannot exceed 255 characters',
-                'email.required' => 'Please enter your email address',
-                'email.email' => 'Please enter a valid email address',
-                'email.unique' => 'This email is already registered',
-                'password.required' => 'Please enter a password',
-                'password.min' => 'Password must be at least 6 characters',
-                'password.confirmed' => 'Password confirmation does not match',
-                'department.required' => 'Please enter your department',
-                'profile_picture.image' => 'The file must be an image',
-                'profile_picture.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif',
-                'profile_picture.max' => 'The image size cannot exceed 2MB'
-            ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:students',
+            'department' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-            $student = new Student();
-            $student->name = $request->name;
-            $student->email = $request->email;
-            $student->department = $request->department;
-            $student->password = Hash::make($request->password);
+        $student = Student::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'department' => $request->department,
+            'password' => Hash::make($request->password),
+        ]);
 
-            if ($request->hasFile('profile_picture')) {
-                $image = $request->file('profile_picture');
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('uploads'), $imageName);
-                $student->profile_picture = $imageName;
-            }
+        // Store student data in session
+        Session::put('student_id', $student->id);
+        Session::put('student_name', $student->name);
+        Session::put('student_email', $student->email);
+        Session::put('student_department', $student->department);
+        Session::put('student_profile_picture', $student->profile_picture);
 
-            $student->save();
-            Session::put('student', $student);
-
-            return redirect()->route('dashboard')->with('success', 'Registration successful! Welcome, ' . $student->name . '!');
-        } catch (ValidationException $e) {
-            return back()
-                ->withErrors($e->errors())
-                ->withInput($request->except('password', 'password_confirmation'));
-        }
+        return redirect()->route('dashboard');
     }
 }
