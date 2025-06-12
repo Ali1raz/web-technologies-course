@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\Course;
 use App\Models\StudentCourse;
 use Illuminate\Validation\ValidationException;
+use App\Models\CourseRegistration;
 
 class StudentController extends Controller
 {
@@ -26,7 +27,15 @@ class StudentController extends Controller
             return redirect()->route('login');
         }
 
-        return view('dashboard', ['student' => $student]);
+        $registeredCourses = CourseRegistration::with('course')
+            ->where('student_id', $student->id)
+            ->get()
+            ->pluck('course');
+
+        return view('dashboard', [
+            'student' => $student,
+            'registeredCourses' => $registeredCourses
+        ]);
     }
 
     public function showLoginForm()
