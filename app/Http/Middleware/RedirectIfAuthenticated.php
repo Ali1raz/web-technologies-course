@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class Authenticate
+class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Session::has('student')) {
-            return redirect()->route('login');
+        if (Session::has('student')) {
+            return redirect()->route('dashboard');
         }
 
         return $next($request);
