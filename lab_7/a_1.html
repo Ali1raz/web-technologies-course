@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Click button</p>
+    <p id="demo"></p>
+
+    <button onclick="myFunction()">Click it</button>
+
+    <script>
+      var myVar;
+      function myFunction() {
+        myVar = setTimeout(msg, 3000);
+      }
+
+      function msg() {
+        document.getElementById("demo").innerHTML = "Hello Ali!";
+      }
+    </script>
+  </body>
+</html>
