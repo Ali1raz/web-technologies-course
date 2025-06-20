@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.account-section {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 95%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.create {
+    background-color: #f3f3f3;
+}
+
+.update {
+    background-color: #d4b5ff;
+}
+
+.delete {
+    background-color: #ffb5b5;
+}
+
+.search {
+    background-color: #b5ffd4;
+}
+
+.create button {
+    background-color: #2ef480;
+}
+
+.update button {
+    background-color: #7321e7;
+}
+
+.delete button {
+    background-color: #dc3545;
+}
+
+.search button {
+    background-color: #324ecc;
+}
+
+@media (max-width: 600px) {
+    .account-section {
+        width: 95%;
+    }
+}
