@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>
+      Click the button to start a timer that will display a message after 3
+      seconds.
+    </p>
+    <p id="demo"></p>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+
+    <script>
+      var myVar;
+
+      function start() {
+        document.getElementById("demo").innerHTML = "Waiting for 3 seconds!";
+        myVar = setTimeout(msg, 3000);
+      }
+      function stop() {
+        document.getElementById("demo").innerHTML = "Stopped!";
+        clearTimeout(myVar);
+      }
+      function msg() {
+        document.getElementById("demo").innerHTML = "Hello Ali!";
+      }
+    </script>
+  </body>
+</html>

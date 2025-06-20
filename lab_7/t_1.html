@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Animal History Carousel</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .slider-img {
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animal History Banner -->
+    <div class="jumbotron text-center bg-info text-white">
+      <h1>Animal History</h1>
+      <p>Explore the fascinating creatures from Earth's past</p>
+    </div>
+
+    <!-- Image Slider Section -->
+    <!-- Image Slider Section -->
+    <div class="container text-center mb-4">
+      <h3>Animal Image Slider</h3>
+      <img
+        id="slider"
+        class="slider-img mb-3"
+        src="e1.jpeg"
+        alt="Animal Slider"
+      />
+      <br />
+      <button class="btn btn-success mr-2" onclick="playSlider()">Play</button>
+      <button class="btn btn-danger" onclick="pauseSlider()">Pause</button>
+    </div>
+
+    <!-- Animal 1: Saber-Toothed Tiger -->
+    <div class="container mb-5">
+      <h3 class="mb-4">Saber-Toothed Tiger</h3>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img src="e1.jpeg" class="img-fluid" alt="Saber-Toothed Tiger" />
+        </div>
+        <div class="col-md-6">
+          <p>
+            The Saber-Toothed Tiger, or Smilodon, was a prehistoric predator
+            known for its enormous curved canine teeth. It roamed the Americas
+            during the Ice Age, and although it's called a "tiger," it's not
+            closely related to modern tigers.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animal 2: Woolly Mammoth -->
+    <div class="container mb-5">
+      <h3 class="mb-4">Woolly Mammoth</h3>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img src="e2.jpeg" class="img-fluid" alt="Woolly Mammoth" />
+        </div>
+        <div class="col-md-6">
+          <p>
+            The Woolly Mammoth was a large, elephant-like mammal covered in
+            thick fur to survive the cold Ice Age climate. It had long, curved
+            tusks and lived in northern regions of Europe, Asia, and North
+            America.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animal 3: Dodo -->
+    <div class="container mb-5">
+      <h3 class="mb-4">Dodo</h3>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img src="e3.jpeg" class="img-fluid" alt="Archaeopteryx" />
+        </div>
+        <div class="col-md-6">
+          <p>
+            Archaeopteryx is known as the "first bird" and represents a crucial
+            link in the evolution of birds from dinosaurs. It had feathers and
+            wings like modern birds, but also dinosaur traits like teeth and a
+            long bony tail. Fossils have been found in Germany and show it lived
+            about 150 million years ago.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript for Slider -->
+    <script>
+      let images = [
+        "https://source.unsplash.com/300x200/?nature",
+        "https://source.unsplash.com/300x200/?animal",
+        "",
+      ];
+      let index = 0;
+      let sliderInterval;
+
+      function showImage() {
+        document.getElementById("slider").src = images[index];
+        index = (index + 1) % images.length;
+      }
+
+      function playSlider() {
+        pauseSlider(); // stop any previous interval
+        sliderInterval = setInterval(showImage, 2000);
+      }
+
+      function pauseSlider() {
+        clearInterval(sliderInterval);
+      }
+    </script>
+  </body>
+</html>

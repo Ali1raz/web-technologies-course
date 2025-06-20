@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <h1>
+        A digit 1 to 4, two uppercase, two digits, and two uppercase, three
+        digits
+      </h1>
+
+      <input type="text" name="user" id="" />
+      <button>Submit</button>
+    </form>
+
+    <script>
+      const form = document.querySelector("form");
+      const userInput = document.querySelector("input[name='user']");
+
+      const regex =
+        /^(?=.*\d{1,4})(?=.*[A-Z]{2})(?=.*\d{2})(?=.*[A-Z]{2})(?=.*\d{3})/;
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form submission
+
+        const user = userInput.value;
+
+        if (!regex.test(user)) {
+          alert(
+            "The input must contain a digit 1 to 4, two uppercase letters, two digits, and two uppercase letters, followed by three digits."
+          );
+          return;
+        }
+
+        alert("Valid input!");
+      });
+    </script>
+  </body>
+</html>

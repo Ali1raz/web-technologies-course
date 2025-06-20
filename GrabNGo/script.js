@@ -30,3 +30,26 @@ document.querySelectorAll(".order-now").forEach((button) => {
     confirmationMessage.style.display = "block";
   });
 });
+
+// Add 3D effect for hero section
+const hero = document.querySelector('.hero');
+
+hero.addEventListener('mousemove', (e) => {
+    const { left, top, width, height } = hero.getBoundingClientRect();
+    const x = (e.clientX - left - width / 2) / (width / 2);
+    const y = (e.clientY - top - height / 2) / (height / 2);
+    
+    // Calculate rotation angles (limited to 15 degrees)
+    const rotateX = -y * 15;
+    const rotateY = x * 15;
+    
+    // Update CSS variables
+    hero.style.setProperty('--rotate-x', `${rotateX}deg`);
+    hero.style.setProperty('--rotate-y', `${rotateY}deg`);
+});
+
+// Reset rotation when mouse leaves
+hero.addEventListener('mouseleave', () => {
+    hero.style.setProperty('--rotate-x', '0deg');
+    hero.style.setProperty('--rotate-y', '0deg');
+});
